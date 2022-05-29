@@ -1,0 +1,24 @@
+{
+    "name": "venue-tracker",
+    "version": "1.1.0",
+    "author": "Francesc Sala",
+    "description": "Venue Tracker, to asssist in venue imnplememtation and venue operations in Sport Events",
+    "keywords": [
+        "olympics",
+        "olympic",
+        "venue",
+        "implementation",
+        "operations"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "1.20.0",
+        "express": "^4.18.1",
+        "morgan": "^1.10.0",
+        "mysql2": "^2.3.3"
+    },
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    }
+}
