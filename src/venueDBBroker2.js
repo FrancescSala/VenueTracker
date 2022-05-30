@@ -41,11 +41,3 @@ class venueDBBroker2 {
 }
 
 module.exports = (dbConnectionPool) => { return new venueDBBroker2(dbConnectionPool);}
-/*
-CREATE TABLE venues (
-    ven_venuecode varchar(3) NOT NULL,
-    ven_venuename varchar(35) NOT NULL,
-    ven_description varchar(50),
-    ven_venuetype varchar(20) NOT NULL,
-    ven_zonecode varchar(3) NOT NULL
-    */
