@@ -67,7 +67,7 @@ class APIController {
         this.app.get("/discipline/venue/:venueid", async (req, res) => {
             let disciplineBrk = require('./disciplineDBBroker.js')(this.dbConnectionPool);
             let disciplineList = await disciplineBrk.getListByVenue(req.params.venueid);
-            return (disciplineList) ? res.status(200).json(disciplineList) : res.status(404).send(`Discipline with code ${req.params.venueid} could not be found.`);
+            return (disciplineList.length !== 0) ? res.status(200).json(disciplineList) : res.status(404).send(`Disciplines not found for venue with code ${req.params.venueid}. Either the venue does not exist or it is a non competition venue.`);
         });
         this.app.get("/discipline/venue/", async (req, res) => {
             return res.status(404).send("Disciplines could not be found. Please review the parameters."); 
