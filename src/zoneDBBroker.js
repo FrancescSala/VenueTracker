@@ -18,7 +18,7 @@ class zoneDBBroker {
     }
 
     async getById(code) {
-        let sql = "SELECT * FROM zones WHERE zon_zonecode = ?";
+        let sql = 'SELECT * FROM zones WHERE zon_zonecode = ?';
         let [rows] = await this.dbConnPool.execute(sql, [code]);
         if (rows.length === 0)  return null;
         let z = zone();

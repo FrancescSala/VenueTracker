@@ -9,8 +9,8 @@
 */
  const express = require('express');
  const mysql = require('mysql2/promise');
- const morgan = require("morgan");
- const bodyParser = require("body-parser");
+ //const morgan = require('morgan');
+ const bodyParser = require('body-parser');
 
  class ApplicationServer {
  
@@ -44,7 +44,7 @@
                 queueLimit: 0 
             });
             // now that supposedly we are connected, let's test it
-            let rows = await self.dbConnectionPool.execute("SELECT 1 FROM DUAL");
+            let rows = await self.dbConnectionPool.execute('SELECT 1 FROM DUAL');
          } catch (err) {
             console.log(`SEVERE ERROR. Could not connect to database: ${err}`);
          }
@@ -55,20 +55,20 @@
      }
 
      initExpressMiddleWare() {
-	//	this.app.use(morgan("dev"));
+	//	this.app.use(morgan('dev'));
 		this.app.use(bodyParser.urlencoded({extended:true}));
 		this.app.use(bodyParser.json());
 	}
 
     initControllers() {
-        require("./APIController2.js")(this.app, this.dbConnectionPool);
+        require('./APIController2.js')(this.app, this.dbConnectionPool);
 	}
 
  
      start() {
          let self = this;
-         this.app.listen(this.app.get("port"), () => {
-             console.log(`Server Listening for port: ${self.app.get("port")}`);
+         this.app.listen(this.app.get('port'), () => {
+             console.log(`Server Listening for port: ${self.app.get('port')}`);
          });
      }
  

@@ -18,7 +18,7 @@ class disciplineDBBroker {
     }
 
     async getById(code) {
-        let sql = "SELECT * FROM disciplines WHERE dis_disciplinecode = ?";
+        let sql = 'SELECT * FROM disciplines WHERE dis_disciplinecode = ?';
         let [rows] = await this.dbConnPool.execute(sql, [code]);
         if (rows.length === 0)  return null;
         let d = discipline();
@@ -28,7 +28,7 @@ class disciplineDBBroker {
     };
 
     async getListByVenue(venueCode) {
-        let sql = "SELECT disciplines.* FROM disciplines, venuedisciplines WHERE vdi_venuecode = ? AND vdi_disciplinecode = dis_disciplinecode";
+        let sql = 'SELECT disciplines.* FROM disciplines, venuedisciplines WHERE vdi_venuecode = ? AND vdi_disciplinecode = dis_disciplinecode';
         let [rows] = await this.dbConnPool.execute(sql, [venueCode]);
         let disciplines = [];
         for (let disc of rows) {

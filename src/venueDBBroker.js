@@ -25,7 +25,7 @@ class venueDBBroker {
 getById(code) {
     let self = this;
     return new Promise((resolve, reject) => {
-        let sql = "SELECT * FROM venues WHERE ven_venuecode = ?";
+        let sql = 'SELECT * FROM venues WHERE ven_venuecode = ?';
         let vv = this.dbConnPool.execute(sql, [code], 
             (err,rows)=> {
                 if (err) throw err;
