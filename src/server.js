@@ -12,7 +12,7 @@
  //const morgan = require('morgan');
  const bodyParser = require('body-parser');
 
- class ApplicationServer {
+ class ApplicationServerKK {
  
      constructor() {
         //Express application object
