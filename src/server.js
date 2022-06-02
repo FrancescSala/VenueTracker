@@ -9,11 +9,8 @@
 */
  const express = require('express');
  const mysql = require('mysql2/promise');
- const morgan = require("morgan");
- const bodyParser = require("body-parser");
-
- const venue = require('./venue.js');
- const venueDBBroker = require('./venueDBBroker.js');
+ //const morgan = require('morgan');
+ const bodyParser = require('body-parser');
 
  class ApplicationServer {
  
@@ -27,24 +24,33 @@
         this.initExpress();
         //initialize middleware modules
         this.initExpressMiddleWare();
-        // initialize the endpoints of the application
-        this.initControllers(this.app);
+        // initialize the API endpoints of the application
+        this.initAPIControllers();
+        // initialize the HTML endpoints of the application
+        this.initHTMLControllers();
+
         //run the express application
         this.start();
      }
  
-     connectToDB() {
+     async connectToDB() {
          let self = this;
          // create the connection pool. Pool specific settings are the default
-         self.dbConnectionPool = mysql.createPool({
-            host     : 'localhost',
-            database : 'venue_implementation_tracker',
-            user     : 'root',
-            password : 'rootAdmin2022',
-            connectionLimit: 10,
-            waitForConnections: true,
-            queueLimit: 0 
-         });
+         try {
+            self.dbConnectionPool = mysql.createPool({
+                host     : 'localhost',
+                database : 'venue_implementation_tracker',
+                user     : 'root',
+                password : 'rootAdmin2022',
+                connectionLimit: 10,
+                waitForConnections: true,
+                queueLimit: 0 
+            });
+            // now that supposedly we are connected, let's test it
+            let rows = await self.dbConnectionPool.execute('SELECT 1 FROM DUAL');
+         } catch (err) {
+            console.log(`SEVERE ERROR. Could not connect to database: ${err}`);
+         }
      };
     
      initExpress() {
@@ -52,20 +58,23 @@
      }
 
      initExpressMiddleWare() {
-	//	this.app.use(morgan("dev"));
+	//	this.app.use(morgan('dev'));
 		this.app.use(bodyParser.urlencoded({extended:true}));
 		this.app.use(bodyParser.json());
 	}
 
-    initControllers() {
-        require("./APIController.js")(this.app, this.dbConnectionPool);
+    initAPIControllers() {
+        require('./APIController.js')(this.app, this.dbConnectionPool);
 	}
 
+    initHTMLControllers() {
+        require('./HTMLController.js')(this.app, this.dbConnectionPool);
+	}
  
      start() {
          let self = this;
-         this.app.listen(this.app.get("port"), () => {
-             console.log(`Server Listening for port: ${self.app.get("port")}`);
+         this.app.listen(this.app.get('port'), () => {
+             console.log(`Server Listening for port: ${self.app.get('port')}`);
          });
      }
  

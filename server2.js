@@ -24,8 +24,11 @@
         this.initExpress();
         //initialize middleware modules
         this.initExpressMiddleWare();
-        // initialize the endpoints of the application
-        this.initControllers(this.app);
+        // initialize the API endpoints of the application
+        this.initAPIControllers();
+        // initialize the HTML endpoints of the application
+        this.initHTMLControllers();
+
         //run the express application
         this.start();
      }
@@ -60,10 +63,13 @@
 		this.app.use(bodyParser.json());
 	}
 
-    initControllers() {
-        require('./APIController2.js')(this.app, this.dbConnectionPool);
+    initAPIControllers() {
+        require('./src/APIController.js')(this.app, this.dbConnectionPool);
 	}
 
+    initHTMLControllers() {
+        require('./src/HTMLController.js')(this.app, this.dbConnectionPool);
+	}
  
      start() {
          let self = this;
